@@ -1,0 +1,95 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+------------------------------------------------------------------------
+
+title: "LAB 2" author: "Nehal Ur Rahman" date: "`r Sys.Date()`" output: word_document
+
+#NAME: NEHAL UR RAHMAN
+#STUDENT ID: 991691259
+
+##Introduction 
+#In Lab 2 We will be analyzing a College dataset and performing various functions to understand the variables. We will also be creating a new variable and provide visualizations.
+
+
+```{r}
+#Import
+#Here we are going to load and read all variables with its values from the college1 dataset.
+college <- read.csv("college1.csv")
+head(college)
+
+```
+
+```{r}
+#The fix function is used to fix the 1st column and not store it as data as they are just labels
+fix(college)
+```
+
+```{r}
+#Here we fix the dataset by adding a column called row.names which records the name of all the universities
+row.names(college) = college[,1]
+fix(college)
+```
+
+```{r}
+#Using the function given below we delete the 1st column in the college dataset as it is not required in our analysis.
+college = college[,-1]
+fix(college)
+
+```
+
+
+```{r}
+#The as.factor function converts the character variable(Private) to vector with numerical values
+college$Private<-as.factor(college$Private)
+```
+
+###Question 1
+```{r}
+
+#First we create a variable by using the function rep() which replicates the college with 777 number of rows with a value of "No" 
+Elite <- rep("No",nrow(college))
+#Now we record the values as "Yes" in the Elite column with a condition that the proportion of students coming from the top 10% of their high school exceeds 50%. 
+Elite[college$Top10perc >50] <- "Yes"
+#The as.factor function displays the variable(Elite) as vector with levels(Yes & No)
+Elite <- as.factor(Elite)
+#Now we create a dataframe with college and elite
+college <- data.frame(college , Elite)
+TotalEliteSchools <- length(college$Elite[college$Elite=="Yes"])
+#We then calculate the total number of Elite colleges and display the number. 
+message("The total number of Elite Schools are : ", TotalEliteSchools)
+
+```
+###Question 2
+```{r}
+#The summary function is used here to get details of the Elite column
+summary(college$Elite)
+```
+```{r}
+#A side by side boxplot of Outstate Vs Elite is created using plot function
+plot(college$Outstate ~ college$Elite, col = c("violet", "orange"), xlab="ELITE",ylab="OUTSTATE", main = "Outstate vs Elite", border = "black")
+```
+#Boxplot: From the boxplot we can see that the number of Elite colleges are more in the Outstate.
+
+###Question 3
+```{r}
+#The hist() function is used here to produce histograms with variable number of bins for 3 of the quantitative variables like Top10perc, Top25perc and Grad.Rate.
+#breaks = 6 & 8 is assigned first which gives lesser number of bins
+#breaks = 12 is assigned next to get more number of bins. 
+
+#The par() function divides the frame into the required number to display the histograms within one window.
+par(mfcol=c(2,3))
+
+hist(college$Top10perc, col = "blue",breaks=8, xlab = "Top 10%", ylab = "Value", main="Students from Top 10% of H.S")
+hist(college$Top10perc, col = "green",breaks=12, xlab = "Top 10%", ylab = "Value", main="Students from Top 10% of H.S")
+
+hist(college$Top25perc, col = "blue",breaks= 6, xlab = "Top 25%", ylab = "Value", main="Students from Top 25% of H.S")
+hist(college$Top25perc, col = "green",breaks=12, xlab = "Top 25%", ylab = "Value", main="Students from Top 25% of H.S")
+
+hist(college$Grad.Rate, col = "blue",breaks=6, xlab = "Graduation rate", ylab = "Value", main="College Graduation Rate")
+hist(college$Grad.Rate, col = "green",breaks=12, xlab = "Graduation rate", ylab = "Value", main="College Graduation Rate")
+
+```
+#The histogram for the 3 variables: Top10perc, Top25perc and Grad.Rate have been displayed with different number of bins.
