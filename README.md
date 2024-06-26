@@ -1,7 +1,7 @@
 # College Dataset
 
 # Introduction
-In Lab 2, we analyze a College dataset and perform various functions to understand the variables. We will also be creating a new variable and provide visualizations.
+Using the given College dataset, we analyze and perform various functions to understand the variables. We will also be creating a new variable and provide visualizations.
 
 # Dataset
 The dataset used in this analysis is college1.csv. It contains information about various colleges including variables such as Private, Outstate, Top10perc, Top25perc, and Grad.Rate.
